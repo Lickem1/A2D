@@ -1,13 +1,11 @@
 package me.isaiah.entity.player;
 
-import me.isaiah.block.impl.chest.Chest;
+import me.isaiah.entity.npc.NPCManager;
 import me.isaiah.game.GamePanel;
 import me.isaiah.KeyHandler;
 import me.isaiah.entity.Entity;
 import me.isaiah.entity.EntityDirection;
 import me.isaiah.block.Block;
-import me.isaiah.block.BlockManager;
-import me.isaiah.block.impl.key.Key;
 import me.isaiah.texture.Texture;
 import me.isaiah.texture.TextureType;
 
@@ -63,9 +61,12 @@ public class Player extends Entity {
         // Checking player collision
         setCollidingWithObject(false);
         getGamePanel().getCollisionManager().checkTile(this);
-        Block index = getGamePanel().getCollisionManager().checkInteract(this, true);
 
-        getGamePanel().getBlockManager().checkCollision(index);
+        Block block = getGamePanel().getCollisionManager().checkInteract(this, true);
+        getGamePanel().getBlockManager().checkCollision(block);
+
+        // NPC
+        Entity entity = getGamePanel().getCollisionManager().checkNPCInteraction(this, NPCManager.getNpcs());
 
         if(!isCollidingWithObject()) {
             switch (getCurrentDirection()) {
@@ -81,34 +82,20 @@ public class Player extends Entity {
                 case RIGHT:
                     this.worldX += this.getEntitySpeed();
                     break;
+
             }
         }
 
         getSkin().getTextureAnimation().updateAssetAnimation(getCurrentDirection());
     }
 
-    public void pickupItem(Block block) {
 
-        if(block != null) {
-
-            if(block instanceof Key) {
-                Key key = (Key) block;
-
-                if(key.pickupItem) {
-                    BlockManager.removeBlockFromGame(block);
-                }
-            }
-        }
-
-    }
-
+    @Override
     public void draw(Graphics2D g) {
 
         BufferedImage[] images = this.getSkin().getTextureAnimation().getAssetFromDirection(getCurrentDirection());
         BufferedImage toDrawImage = images[getSkin().getTextureAnimation().getAssetNum()];
 
         g.drawImage(toDrawImage, screenX, screenY, getGamePanel().getTileSize(), getGamePanel().getTileSize(), null);
-
-
     }
 }

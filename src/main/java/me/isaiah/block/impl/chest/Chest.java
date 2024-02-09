@@ -6,14 +6,17 @@ import lombok.SneakyThrows;
 import me.isaiah.block.Block;
 import me.isaiah.block.BlockEvent;
 import me.isaiah.block.BlockManager;
-import me.isaiah.entity.EntityDirection;
 import me.isaiah.game.GamePanel;
+import me.isaiah.sound.Sound;
+import me.isaiah.sound.SoundType;
 import me.isaiah.texture.Texture;
 import me.isaiah.texture.TextureAnimation;
 import me.isaiah.texture.TextureType;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Getter
@@ -22,6 +25,7 @@ public class Chest extends Block implements BlockEvent {
 
     private final GamePanel gamePanel;
     private boolean opened = false;
+    private final List<Sound> sounds = new ArrayList<>();
 
     public Chest(GamePanel gp, int x, int y) {
         this.gamePanel = gp;
@@ -32,6 +36,9 @@ public class Chest extends Block implements BlockEvent {
         this.texture.getTextureAnimation().setAssetSpeed(5);
         this.solid = true;
         this.event = this;
+
+
+        sounds.add(new Sound(SoundType.CHEST_OPEN));
 
         BlockManager.addBlockToGame(this);
     }
@@ -46,6 +53,7 @@ public class Chest extends Block implements BlockEvent {
         animation.setAnimationFreeze(3);
 
         texture.setTextureAnimation(animation);
+        sounds.get(0).play();
     }
 
     private BufferedImage[] textureOpenedRescale(BufferedImage image, Texture texture, int width, int height, int rows, int cols) {
@@ -70,7 +78,7 @@ public class Chest extends Block implements BlockEvent {
 
     public void event(Block b) {
 
-        if(this.gamePanel.getPlayer().getCurrentDirection() != EntityDirection.UP) return;
+
         if(isOpened()) return;
 
         openChest();

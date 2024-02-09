@@ -8,8 +8,8 @@ import java.awt.*;
 
 public class PauseUI extends UI {
 
-    private GamePanel gp;
-    private Font font;
+    private final GamePanel gp;
+    private final Font font;
 
     public PauseUI(GamePanel gp) {
         this.gp = gp;
@@ -25,7 +25,6 @@ public class PauseUI extends UI {
 
             String string = "PAUSED";
             int length = (int) graphics2D.getFontMetrics().getStringBounds(string, graphics2D).getWidth();
-
             int x = gp.getScreenWidth()/2 - length/2;
             int y = gp.getScreenHeight()/2;
 

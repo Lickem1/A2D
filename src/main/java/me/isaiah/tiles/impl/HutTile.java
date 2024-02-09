@@ -6,5 +6,6 @@ public class HutTile extends Tile {
 
     public HutTile() {
         super("/assets/terrain/hut.png", 4);
+        setCollision(true);
     }
 }

@@ -2,30 +2,34 @@ package me.isaiah.ui;
 
 import me.isaiah.game.GamePanel;
 import me.isaiah.ui.impl.PauseUI;
+import me.isaiah.ui.impl.Test;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class UIManager {
 
-    private static final List<UI> allUIs = new ArrayList<>();
+    private static final Map<UUID, UI> allUIs = new HashMap<>();
     private final GamePanel gamePanel;
 
     public UIManager(GamePanel gp) {
         this.gamePanel = gp;
 
         new PauseUI(gp);
+        new Test();
     }
 
     public void drawUIs(Graphics2D graphics2D) {
 
-        for(UI uis : allUIs) {
+        for(UI uis : allUIs.values()) {
             uis.draw(graphics2D);
         }
     }
 
     public static void addUIToGame(UI ui) {
-        allUIs.add(ui);
+        allUIs.put(UUID.randomUUID(), ui);
+    }
+    public static UI getUI(UUID ui) {
+        return allUIs.get(ui);
     }
 }

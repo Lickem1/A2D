@@ -4,9 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 import me.isaiah.KeyHandler;
 import me.isaiah.block.BlockManager;
+import me.isaiah.entity.npc.NPCManager;
 import me.isaiah.entity.player.Player;
+import me.isaiah.sound.SoundManager;
 import me.isaiah.tiles.TileManager;
-import me.isaiah.ui.UI;
 import me.isaiah.ui.UIManager;
 
 import javax.swing.*;
@@ -39,6 +40,8 @@ public class GamePanel extends JPanel implements Runnable {
     private final CollisionManager collisionManager;
     private final BlockManager blockManager;
     private final UIManager uiManager;
+    private final SoundManager soundManager;
+    private final NPCManager npcManager;
 
 
     public GamePanel() {
@@ -52,6 +55,8 @@ public class GamePanel extends JPanel implements Runnable {
         this.collisionManager = new CollisionManager(this);
         this.blockManager = new BlockManager(this);
         this.uiManager = new UIManager(this);
+        this.soundManager = new SoundManager(this);
+        this.npcManager = new NPCManager(this);
 
         this.gameState = GameState.PLAYING;
         this.player = new Player(this, keyHandler);
@@ -104,6 +109,7 @@ public class GamePanel extends JPanel implements Runnable {
             case LOADING:
             case PLAYING:
                 blockManager.updateBlocks();
+                npcManager.updateNPCS(); // npc
                 player.update();
                 break;
             case PAUSED:
@@ -119,6 +125,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         tileManager.draw(g2);
         blockManager.drawBlocks(g2);
+        npcManager.drawNPCS(g2); // npc
         player.draw(g2);
         uiManager.drawUIs(g2);
 

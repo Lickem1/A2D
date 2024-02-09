@@ -45,7 +45,7 @@ public class TileManager {
         tiles.put(23, new Tile("/assets/terrain/grass/water02.png", 23));
         tiles.put(24, new Tile("/assets/terrain/grass/water03.png", 24));
         tiles.put(25, new Tile("/assets/terrain/grass/water04.png", 25));
-        tiles.put(26, new Tile("/assets/terrain/grass/water05.png", 26));
+        tiles.put(26, new Tile("/assets/terrain/grass/water05.png", 26)); // Clean this up later
         tiles.put(27, new Tile("/assets/terrain/grass/water06.png", 27));
         tiles.put(28, new Tile("/assets/terrain/grass/water07.png", 28));
         tiles.put(29, new Tile("/assets/terrain/grass/water08.png", 29));
@@ -54,6 +54,10 @@ public class TileManager {
         tiles.put(32, new Tile("/assets/terrain/grass/water11.png", 32));
         tiles.put(33, new Tile("/assets/terrain/grass/water12.png", 33));
         tiles.put(34, new Tile("/assets/terrain/grass/water13.png", 34));
+
+        for(int i = 21; i < 34; i++) {
+            tiles.get(i).setCollision(true);
+        }
 
 
     }
