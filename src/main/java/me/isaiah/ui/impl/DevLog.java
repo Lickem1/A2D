@@ -4,11 +4,10 @@ import me.isaiah.ui.UI;
 
 import java.awt.*;
 
-public class Test extends UI {
+public class DevLog extends UI {
 
     Font font;
-    public Test() {
-
+    public DevLog() {
         font = new Font("Arial", Font.PLAIN, 25);
     }
 

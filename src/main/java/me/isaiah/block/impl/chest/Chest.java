@@ -84,4 +84,5 @@ public class Chest extends Block implements BlockEvent {
         openChest();
         System.out.println("Opened chest!");
     }
+
 }

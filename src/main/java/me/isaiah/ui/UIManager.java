@@ -2,7 +2,7 @@ package me.isaiah.ui;
 
 import me.isaiah.game.GamePanel;
 import me.isaiah.ui.impl.PauseUI;
-import me.isaiah.ui.impl.Test;
+import me.isaiah.ui.impl.DevLog;
 
 import java.awt.*;
 import java.util.*;
@@ -16,7 +16,7 @@ public class UIManager {
         this.gamePanel = gp;
 
         new PauseUI(gp);
-        new Test();
+        new DevLog();
     }
 
     public void drawUIs(Graphics2D graphics2D) {

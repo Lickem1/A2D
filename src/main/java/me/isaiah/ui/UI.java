@@ -6,7 +6,6 @@ import java.awt.*;
 
 public abstract class UI {
 
-
     public UI() {
         UIManager.addUIToGame(this);
     }

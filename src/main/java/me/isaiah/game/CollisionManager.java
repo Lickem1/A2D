@@ -75,84 +75,6 @@ public class CollisionManager {
 
     }
 
-    // object / block interact
-    public Block checkInteract(Entity entity, boolean player) {
-        int index = 999;
-        Block blockInteracted = null;
-
-        for (Block block : BlockManager.getAllBlocks()) {
-
-            entity.getCollisionArea().x = entity.worldX + entity.getCollisionArea().x;
-            entity.getCollisionArea().y = entity.worldY + entity.getCollisionArea().y;
-
-            block.solidArea.x = block.worldX + block.solidArea.x;
-            block.solidArea.y = block.worldY + block.solidArea.y;
-
-            switch (entity.getCurrentDirection()) {
-                case UP:
-                    entity.getCollisionArea().y -= entity.getEntitySpeed();
-
-                    if (entity.getCollisionArea().intersects(block.solidArea)) {
-                        if (block.solid) {
-                            entity.setCollidingWithObject(true);
-                        }
-                        if (player) {
-                            index = 1;
-                        }
-                        blockInteracted = block;
-
-                    }
-                    break;
-
-                case DOWN:
-                    entity.getCollisionArea().y += entity.getEntitySpeed();
-                    if (entity.getCollisionArea().intersects(block.solidArea)) {
-                        if (block.solid) {
-                            entity.setCollidingWithObject(true);
-                        }
-                        if (player) {
-                            index = 1;
-                        }
-                        blockInteracted = block;
-                    }
-                    break;
-
-                case LEFT:
-                    entity.getCollisionArea().x -= entity.getEntitySpeed();
-                    if (entity.getCollisionArea().intersects(block.solidArea)) {
-                        if (block.solid) {
-                            entity.setCollidingWithObject(true);
-                        }
-
-                        if (player) {
-                            index = 1;
-                        }
-                        blockInteracted = block;
-                    }
-                    break;
-
-                case RIGHT:
-                    entity.getCollisionArea().x += entity.getEntitySpeed();
-
-                    if (entity.getCollisionArea().intersects(block.solidArea)) {
-                        if (block.solid) {
-                            entity.setCollidingWithObject(true);
-                        }
-                        if (player) {
-                            index = 1;
-                        }
-                        blockInteracted = block;
-                    }
-                    break;
-            }
-            entity.getCollisionArea().x = entity.getCollisionAreaDefaultX();
-            entity.getCollisionArea().y = entity.getCollisionAreaDefaultY();
-            block.solidArea.x = block.solidAreaDefaultX;
-            block.solidArea.y = block.solidAreaDefaultY;
-        }
-        return blockInteracted;
-    }
-
     // NPC / mob
     public Entity checkNPCInteraction(Entity entity, List<Entity> player) {
         Entity entityInteracted = null;
@@ -254,5 +176,6 @@ public class CollisionManager {
         e.getCollisionArea().x = e.getCollisionAreaDefaultX();
         e.getCollisionArea().y = e.getCollisionAreaDefaultY();
     }
+
 }
 

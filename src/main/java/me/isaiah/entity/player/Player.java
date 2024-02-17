@@ -1,6 +1,8 @@
 package me.isaiah.entity.player;
 
+import me.isaiah.block.BlockCollision;
 import me.isaiah.entity.npc.NPCManager;
+import me.isaiah.entity.npc.alice.NPCAlice;
 import me.isaiah.game.GamePanel;
 import me.isaiah.KeyHandler;
 import me.isaiah.entity.Entity;
@@ -8,6 +10,7 @@ import me.isaiah.entity.EntityDirection;
 import me.isaiah.block.Block;
 import me.isaiah.texture.Texture;
 import me.isaiah.texture.TextureType;
+import me.isaiah.ui.impl.DialogueUI;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -25,9 +28,11 @@ public class Player extends Entity {
         this.screenX = gp.getScreenWidth()/2 - (gp.getTileSize()/2);
         this.screenY = gp.getScreenHeight()/2 - (gp.getTileSize()/2);
         this.setCurrentDirection(EntityDirection.IDLE);
+
         setCollisionArea(new Rectangle(8, 16, 32, 32));
         setCollisionAreaDefaultX(getCollisionArea().x);
         setCollisionAreaDefaultY(getCollisionArea().y);
+
         init();
     }
 
@@ -35,6 +40,7 @@ public class Player extends Entity {
         setWorldX(getGamePanel().getTileSize() * 23);
         setWorldY(getGamePanel().getTileSize() * 21);
         setEntitySpeed(4);
+
     }
 
     public void update() {
@@ -62,11 +68,14 @@ public class Player extends Entity {
         setCollidingWithObject(false);
         getGamePanel().getCollisionManager().checkTile(this);
 
-        Block block = getGamePanel().getCollisionManager().checkInteract(this, true);
-        getGamePanel().getBlockManager().checkCollision(block);
+        new BlockCollision(getGamePanel(), this, true);
 
         // NPC
         Entity entity = getGamePanel().getCollisionManager().checkNPCInteraction(this, NPCManager.getNpcs());
+
+        if(entity instanceof NPCAlice) {
+            new DialogueUI(getGamePanel());
+        }
 
         if(!isCollidingWithObject()) {
             switch (getCurrentDirection()) {
@@ -97,5 +106,6 @@ public class Player extends Entity {
         BufferedImage toDrawImage = images[getSkin().getTextureAnimation().getAssetNum()];
 
         g.drawImage(toDrawImage, screenX, screenY, getGamePanel().getTileSize(), getGamePanel().getTileSize(), null);
+
     }
 }

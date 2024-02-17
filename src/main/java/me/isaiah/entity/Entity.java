@@ -17,8 +17,10 @@ public class Entity {
     public int worldX, worldY;
     private int screenX, screenY;
     private int entitySpeed;
+
     private Rectangle collisionArea;
     public int collisionAreaDefaultX, collisionAreaDefaultY;
+
 
     private boolean collidingWithObject;
 
@@ -29,7 +31,9 @@ public class Entity {
         this.gamePanel = gp;
     }
 
-    public void update() {}
+    public void update() {
+
+    }
     public void draw(Graphics2D g) {
         GamePanel gp = getGamePanel();
 
